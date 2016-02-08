@@ -68,6 +68,14 @@
         </div>
     </nav>
     <div class="container">
+        @if (Session::has('notification'))
+            <div class="alert {{ Session::get('notification_type') }}">
+                @if (Session::has('notification_important'))
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                @endif
+                {{ session('notification') }}
+            </div>
+        @endif
         @yield('content')
     </div>
     {!! Html::script('js/jquery.min.js') !!}
