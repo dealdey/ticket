@@ -21,10 +21,6 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
-
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
@@ -35,4 +31,15 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/support', 'HomeController@index');
+});
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::get('/support', 'HomeController@index');
+});
+
+Route::group(['middleware' => 'admin'], function () {
+    Route::get('/register', ['uses' => 'Auth\AuthController@showRegistrationForm', 'as' => 'register.get']);
+    Route::post('/register', ['uses' => 'Auth\AuthController@register', 'as' => 'register.post']);
 });

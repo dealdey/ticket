@@ -31,7 +31,7 @@
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img alt="Brand" src="{{ url('/imgs/dealdey.png') }}" class="logo">
-                </ ora>
+                </a>
             </div>
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
@@ -47,7 +47,6 @@
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -55,6 +54,9 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
+                                @if (Auth::user()->can(['create-user', 'edit-user']))
+                                <li><a href="{{ url('/register') }}">New User</a></li>
+                                @endif
                                 <li><a href="{{ url('/') }}">Profile</a></li>
                                 <li><a href="{{ url('/') }}">Settings</a></li>
                                 <li><a href="{{ url('/logout') }}">Logout</a></li>

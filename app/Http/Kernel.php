@@ -34,6 +34,11 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
         ],
+        'admin' =>[
+            'web',
+            \App\Http\Middleware\Authenticate::class,
+            \App\Http\Middleware\RegistrationMiddleware::class,
+        ],
     ];
 
     /**
@@ -48,5 +53,9 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
+        'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
+        'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
+        'register' => \App\Http\Middleware\RegistrationMiddleware::class,
     ];
 }
