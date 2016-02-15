@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use Illuminate\Support\Facades\Session;
 use Validator;
+use App\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Department;
 
 class AuthController extends Controller
 {
@@ -55,7 +57,9 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
-            'password_confirmation' => 'required|min:6'
+            'password_confirmation' => 'required|min:6',
+            'staff_nos' => 'required|min:8|max:8|unique:users',
+            'department_id' => 'required'
         ]);
     }
 
@@ -67,11 +71,31 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $role = Role::where('name', '=', 'agent')->first();
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'staff_nos' => $data['staff_nos'],
+            'department_id' => $data['department_id']
         ]);
+        $user->attachRole($role);
+        return $user;
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $departments = Department::lists('name','id');
+        if (property_exists($this, 'registerView')) {
+            return view($this->registerView);
+        }
+        $data = array('departments' => $departments);
+        return view('auth.register', $data);
     }
 
     /**

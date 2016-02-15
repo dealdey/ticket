@@ -27,6 +27,26 @@ class PasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest', ['except' => ['showPasswordForm', 'changePassword']]);
+    }
+
+    public function getPassword(){
+        return $this->showPasswordForm();
+    }
+
+    public function showPasswordForm(){
+        if (property_exists($this, 'changePasswordView')) {
+            return view($this->changePasswordView);
+        }
+
+        return view('auth.passwords.change');
+    }
+
+    public function postPassword(Request $request){
+        return $this->changePassword();
+    }
+
+    public function changePassword(){
+
     }
 }

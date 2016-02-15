@@ -55,11 +55,10 @@
                             </a>
                             <ul class="dropdown-menu">
                                 @if (Auth::user()->can(['create-user', 'edit-user']))
-                                <li><a href="{{ url('/register') }}">New User</a></li>
+                                <li><a href="{{ url('/register') }}">create user</a></li>
                                 @endif
-                                <li><a href="{{ url('/') }}">Profile</a></li>
-                                <li><a href="{{ url('/') }}">Settings</a></li>
-                                <li><a href="{{ url('/logout') }}">Logout</a></li>
+                                <li><a href="{{ url('/password/change') }}">change password</a></li>
+                                <li><a href="{{ url('/logout') }}">logout</a></li>
                             </ul>
                         </li>
                     @endif
