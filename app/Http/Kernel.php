@@ -34,10 +34,18 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
         ],
+        'default' => [
+            'web',
+            'auth',
+        ],
         'admin' =>[
             'web',
             \App\Http\Middleware\Authenticate::class,
             \App\Http\Middleware\RegistrationMiddleware::class,
+        ],
+        'change_password' => [
+            'web',
+            \App\Http\Middleware\Authenticate::class,
         ],
     ];
 

@@ -2,7 +2,7 @@
 
 return [
 
- /*  
+ /*
   *  Constants
   */
   'nav-settings'                  => 'Settings',
@@ -19,8 +19,8 @@ return [
   'table-name'                    => 'Name',
   'table-action'                  => 'Action',
   'table-categories'              => 'Categories',
-  'table-join-category'           => 'Joined Categories',
-  'table-remove-agent'            => 'Remove from agents',
+  'table-join-category'           => 'Categories List',
+  'table-remove-agent'            => 'Remove agents',
   'table-remove-administrator'    => 'Remove from administrators', // New
 
   'table-slug'                    => 'Slug',
@@ -40,7 +40,7 @@ return [
 
   'colon'                         => ': ',
 
- /*  
+ /*
   *  Page specific
   */
 

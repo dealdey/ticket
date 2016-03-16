@@ -1,20 +1,17 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use Illuminate\Support\Facades\Session;
-use Validator;
 use App\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Department;
+use Illuminate\Support\Facades\Validator;
 
-class AuthController extends Controller
-{
+class AuthController extends Controller {
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -40,8 +37,7 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('guest', ['except' => ['logout', 'showRegistrationForm', 'register']]);
     }
 
@@ -51,16 +47,8 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-            'password_confirmation' => 'required|min:6',
-            'staff_nos' => 'required|min:8|max:8|unique:users',
-            'department_id' => 'required'
-        ]);
+    protected function validator(array $data) {
+        return Validator::make($data, ['name' => 'required|max:255', 'email' => 'required|email|max:255|unique:users', 'password' => 'required|confirmed|min:6', 'password_confirmation' => 'required|min:6', 'staff_nos' => 'required|min:8|max:8|unique:users', 'department_id' => 'required']);
     }
 
     /**
@@ -69,16 +57,9 @@ class AuthController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
-    {
+    protected function create(array $data) {
         $role = Role::where('name', '=', 'agent')->first();
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'staff_nos' => $data['staff_nos'],
-            'department_id' => $data['department_id']
-        ]);
+        $user = User::create(['name' => $data['name'], 'email' => $data['email'], 'password' => bcrypt($data['password']), 'staff_nos' => $data['staff_nos'], 'department_id' => $data['department_id']]);
         $user->attachRole($role);
         return $user;
     }
@@ -88,9 +69,8 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showRegistrationForm()
-    {
-        $departments = Department::lists('name','id');
+    public function showRegistrationForm() {
+        $departments = Department::lists('name', 'id');
         if (property_exists($this, 'registerView')) {
             return view($this->registerView);
         }
@@ -104,14 +84,12 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request)
-    {
+    public function register(Request $request) {
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
             $this->throwValidationException(
-                $request, $validator
-            );
+            $request, $validator);
         }
 
         $this->create($request->all());

@@ -39,17 +39,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/support', 'HomeController@index');
 });
 
-Route::get('/password/change', ['as' => 'password.change.get', 'uses' => 'Auth\PasswordController@showPasswordForm'], function(){
-    if(!(Auth::user()->hasRole('super-admin'))){
-        session()->flash('notification', 'You have no permission to perform this task');
-        session()->flash('notification-type', 'alert-warning');
-        session()->flash('notification-important', true);
-        return redirect()->route('tickets.index');
-    }
-});
+Route::get('profile', ['middleware' => 'default', 'as' => 'profile', 'uses' => 'UserController@index',]);
 
-Route::post('/password/change', ['as' => 'password.change.post', 'uses' => 'Auth\PasswordController@changePassword'], function(){
-});
+Route::match(['put', 'patch'], 'profile/update/{id}', ['middleware' => 'default', 'uses' => 'UserController@update', 'as' => 'profile.update',]);
 
 Route::group(['middleware' => 'admin'], function () {
     Route::get('/register', ['uses' => 'Auth\AuthController@showRegistrationForm', 'as' => 'register.get']);

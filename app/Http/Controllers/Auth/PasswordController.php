@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 
 class PasswordController extends Controller
 {
@@ -27,26 +29,6 @@ class PasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => ['showPasswordForm', 'changePassword']]);
-    }
-
-    public function getPassword(){
-        return $this->showPasswordForm();
-    }
-
-    public function showPasswordForm(){
-        if (property_exists($this, 'changePasswordView')) {
-            return view($this->changePasswordView);
-        }
-
-        return view('auth.passwords.change');
-    }
-
-    public function postPassword(Request $request){
-        return $this->changePassword();
-    }
-
-    public function changePassword(){
-
+        
     }
 }

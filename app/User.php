@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Kordy\Ticketit\Models\Category;
+use Kordy\Ticketit\Models\Agent;
+use \Auth;
 
 class User extends Authenticatable
 {
@@ -25,4 +28,23 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public function department()
+    {
+        $id = auth()->user()->id;
+        return Department::where('id', '=', $id)->first();
+    }
+    
+    public function category()
+    {
+        $user = auth()->user();
+        $id = $user->id;
+        if($user->ticketit_agent) 
+        {
+            return Agent::find($id)->categories;
+        }
+        elseif ($user->ticketit_admin) {
+            return ['Administrator'];
+        }
+    }
 }

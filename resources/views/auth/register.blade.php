@@ -70,7 +70,7 @@
                             <label class="col-md-4 control-label">Staff Number</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="staff_nos">
+                                <input type="text" class="form-control" name="staff_nos" value="{{ old('staff_nos') }}">
 
                                 @if ($errors->has('staff_nos'))
                                     <span class="help-block">

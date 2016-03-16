@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>DealDey Ticket - @yield('page')</title>
-
     {!! Html::style('css/app.css') !!}
+    {!! Html::style('vendor/ticketit/css/style.css') !!}
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -16,6 +16,7 @@
             body { padding-top: 0px; }
         }
     </style>
+    @yield('head')
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -57,7 +58,7 @@
                                 @if (Auth::user()->can(['create-user', 'edit-user']))
                                 <li><a href="{{ url('/register') }}">create user</a></li>
                                 @endif
-                                <li><a href="{{ url('/password/change') }}">change password</a></li>
+                                <li><a href="{{ url('/profile') }}">view profile</a></li>
                                 <li><a href="{{ url('/logout') }}">logout</a></li>
                             </ul>
                         </li>
@@ -68,8 +69,8 @@
     </nav>
     <div class="container">
         @if (Session::has('notification'))
-            <div class="alert {{ Session::get('notification_type') }}">
-                @if (Session::has('notification_important'))
+            <div class="alert {{ Session::get('notification-type') }}" id="alert">
+                @if (Session::has('notification-important'))
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 @endif
                 {{ session('notification') }}
@@ -80,6 +81,7 @@
     {!! Html::script('js/jquery.min.js') !!}
     @yield('footer')
     {!! Html::script('js/bootstrap.min.js') !!}
+    {!! Html::script('vendor/ticketit/js/script.js') !!}
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>
